@@ -27,8 +27,90 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.utils.Conversions;
 
-public class SwerveSubsystem {
-      this.m_drivingCANId = drivingCANId;
+public class MAXSwerveModule {
+
+  private final TalonFX m_drivingTalonFX;
+  private final SparkMax m_turningSparkMax;
+
+  private final AbsoluteEncoder m_turningEncoder;
+
+  private final SparkClosedLoopController m_turningPIDController;
+
+  private final double kDrivingMotorPinionTeeth = 14.0;
+
+  // filler number (meters)
+
+  private final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
+
+  private final double kFreeSpeedRpm = 5676;
+
+  private final double kDrivingMotorFreeSpeedRps = kFreeSpeedRpm / 60;
+
+  public static final double kWheelDiameterMeters = 0.0762;
+
+  public final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
+
+  private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.32, 1.51, 0.27);
+
+  public final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
+      / kDrivingMotorReduction;
+
+  public final double kDrivingP = .04;
+  public final double kDrivingI = 0;
+  public final double kDrivingD = 0;
+  public final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
+  public final double kDrivingMinOutput = -1;
+  public final double kDrivingMaxOutput = 1;
+
+  public final double kTurningP = 1;
+  public final double kTurningI = 0;
+  public final double kTurningD = 0;
+  public final double kTurningFF = 0;
+  public final double kTurningMinOutput = -1;
+  public final double kTurningMaxOutput = 1;
+
+  public final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
+  public final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
+
+  public final int kDrivingMotorCurrentLimit = 50; // amps
+  public final int kTurningMotorCurrentLimit = 20; // amps
+
+  private double m_chassisAngularOffset = 0;
+  private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+
+  public final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI) / kDrivingMotorReduction; // meters
+  public final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI) / kDrivingMotorReduction)
+      / 60.0; // meters per second
+
+  public final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
+  public final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
+
+  public final double kTurningEncoderPositionPIDMinInput = 0; // radians
+  public final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
+
+  public final boolean kTurningEncoderInverted = true;
+  int m_drivingCANId;
+
+  public SparkMaxConfig config = new SparkMaxConfig();
+
+  public void invertTalon() {
+    var talonFXConfigurator = m_drivingTalonFX.getConfigurator();
+    var motorConfigs = new MotorOutputConfigs();
+
+    // set invert to CW+ and apply config change
+    motorConfigs.Inverted = InvertedValue.Clockwise_Positive;
+    talonFXConfigurator.apply(motorConfigs);
+  }
+
+  /**
+   * Constructs a MAXSwerveModule and configures the driving and turning motor,
+   * encoder, and PID controller. This configuration is specific to the REV
+   * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
+   * Encoder.
+   */
+
+  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+    this.m_drivingCANId = drivingCANId;
 
     m_drivingTalonFX = new TalonFX(drivingCANId);
     m_turningSparkMax = new SparkMax(turningCANId, MotorType.kBrushless);
