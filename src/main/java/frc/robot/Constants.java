@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,43 +21,40 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final Joystick DriveJoyStick = new Joystick(1);
-  public static final CommandXboxController xboxController = new CommandXboxController(0);
-  //public static final CommandXboxController xboxControllerCoral = new CommandXboxController(0);
+  public static final Joystick DriveJoyStick = new Joystick(0);
+  public static final CommandXboxController xboxController = new CommandXboxController(1);
+  // public static final CommandXboxController xboxControllerCoral = new
+  // CommandXboxController(0);
 
-   // Chassis configuration
+  // Chassis configuration
 
-   // Distance between centers of right and left wheels on robot
-   public static final double kTrackWidth = Units.inchesToMeters(26.5);
-   
-   // Distance between front and back wheels on robot
-   public static final double kWheelBase = Units.inchesToMeters(26.5);
-   
+  // Distance between centers of right and left wheels on robot
+  public static final double kTrackWidth = Units.inchesToMeters(26.5);
 
+  // Distance between front and back wheels on robot
+  public static final double kWheelBase = Units.inchesToMeters(26.5);
 
-   public static boolean kLeftEncoderReversed = false;
+  public static boolean kLeftEncoderReversed = false;
 
-   public static boolean kRightEncoderReversed = false;
+  public static boolean kRightEncoderReversed = true;
 
-   public static double kEncoderDistancePerPulse;
+  public static double kEncoderDistancePerPulse;
 
-  //SparkMax CAN ID's
-  public static final int kBackRightDrivingTalonId = 4;
-  public static final int kFrontRightDrivingTalonId = 3;
-  public static final int kFrontLeftDrivingTalonId = 2;
-  public static final int kBackLeftDrivingTalonId = 1;
-  
-  public static final int kFrontLeftTurningId = 6;
-  public static final int kFrontRightTurningId = 7;
-  public static final int kBackLeftTurningId = 5;
-  public static final int kBackRightTurningId = 8;
+  // SparkMax CAN ID's
+  public static final int kBackRightDrivingTalonId = 2;
+  public static final int kFrontRightDrivingTalonId = 1;
+  public static final int kFrontLeftDrivingTalonId = 4;
+  public static final int kBackLeftDrivingTalonId = 3;
 
+  public static final int kFrontLeftTurningId = 8;
+  public static final int kFrontRightTurningId = 5;
+  public static final int kBackLeftTurningId = 7;
+  public static final int kBackRightTurningId = 6;
 
-
-  //Driving Constants
+  // Driving Constants
   public static final double kDirectionSlewRate = 1.2; // radians per second
   public static final double kMaxSpeedMetersPerSecond = 4.8;
   public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
   public static final boolean kGyroReversed = true;
-  
+
 }

@@ -1,10 +1,7 @@
 package frc.robot.subsystems.Drive;
 
-import com.ctre.phoenix6.hardware.TalonFX;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,14 +10,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.util.WPIUtilJNI;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.utils.SwerveUtils;
+
 import com.studica.frc.AHRS;
 
 public class DriveSubsystem extends SubsystemBase {
@@ -52,16 +44,6 @@ public class DriveSubsystem extends SubsystemBase {
       Constants.kBackRightDrivingTalonId,
       Constants.kBackRightTurningId,
       (Math.PI / 2));
-
-  // The gyro sensor
-
-  // Slew rate filter variables for controlling lateral acceleration
-  private double m_currentRotation = 0.0;
-  private double m_currentTranslationDir = 0.0;
-  private double m_currentTranslationMag = 0.0;
-  private SlewRateLimiter m_magLimiter = new SlewRateLimiter(1.8); // percent per second (1 = 100%)
-  private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(2.0); // percent per second (1 = 100%)
-  private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -133,9 +115,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    xSpeed = xSpeed * .75;
-    ySpeed = ySpeed * .75;
-    rot = rot * .75;
+    System.out.println(rot);
+    xSpeed = xSpeed * .15;
+    ySpeed = ySpeed * .15;
+    rot = rot * 0.3;
 
     // System.out.println("Swerve Drive");
     if (Math.abs(xSpeed) < .1) {
@@ -147,6 +130,7 @@ public class DriveSubsystem extends SubsystemBase {
     if (Math.abs(rot) < .1) {
       rot = 0.0;
     }
+
 
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeed * Constants.kMaxSpeedMetersPerSecond;
@@ -175,10 +159,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
 
   public void setX() {
-    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(51.34)));
+    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-51.34)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-51.34)));
+    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(51.34)));
   }
 
   /**
@@ -190,9 +174,9 @@ public class DriveSubsystem extends SubsystemBase {
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, Constants.kMaxSpeedMetersPerSecond);
-    m_frontLeft.setLeftDesiredState(desiredStates[0]);
+    m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
-    m_rearLeft.setLeftDesiredState(desiredStates[2]);
+    m_rearLeft.setDesiredState(desiredStates[2]);
     m_rearRight.setDesiredState(desiredStates[3]);
   }
 
