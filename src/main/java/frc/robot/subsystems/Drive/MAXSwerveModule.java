@@ -109,6 +109,7 @@ public class MAXSwerveModule {
    * Encoder.
    */
 
+  @SuppressWarnings("removal")
   public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
     this.m_drivingCANId = drivingCANId;
     

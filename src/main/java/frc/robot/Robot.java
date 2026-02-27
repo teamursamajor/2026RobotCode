@@ -22,11 +22,6 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
   
-   //private ElevatorSubsystem m_elevator;
-  //private SparkMax m_SparkMax = new SparkMax(7, MotorType.kBrushless);
-  //private ClimbSubsystem m_climb;
-  
-
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.

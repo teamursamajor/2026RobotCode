@@ -57,4 +57,8 @@ public final class Constants {
   public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
   public static final boolean kGyroReversed = true;
 
+  // Shooter Constants
+  public static final int kfeedTalonFXid = 11;
+  public static final int kFrontShootTalonFXid = 9;
+  public static final int kBackShootTalonFXid = 10;
 }

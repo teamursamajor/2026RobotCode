@@ -5,9 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants;
-import frc.robot.commands.Drive.DriveTest;
-
+import frc.robot.commands.Shooter.FireBallsAtSetDistance;
+import frc.robot.commands.Shooter.ShooterTestMotors;
 import frc.robot.subsystems.Drive.DriveSubsystem;
+import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.concurrent.Event;
@@ -42,12 +43,14 @@ public class RobotContainer {
   public final double kDriveYDeadband = 0.03;
   public final double kDriveXDeadband = 0.1;
   public final double kRotDeadband = 0.4;
+  
 
   // The robot's subsystems and commands are defined here...
-  public DriveSubsystem m_robotDrive = new DriveSubsystem();
-
+  //public DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public ShooterSubsystem m_shooter = new ShooterSubsystem();
+  
   // The driver's controller(s)
-  XboxController m_driverController = new XboxController(0);
+  //XboxController m_driverController = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,20 +59,19 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-    System.out.println("configuring");
 
     // Configure default commands
-    m_robotDrive.setDefaultCommand(
-        // // The left stick controls translation of the robot.
-        // // Turning is controlled by the X axis of the right stick.
+    // m_robotDrive.setDefaultCommand(
+    //     // // The left stick controls translation of the robot.
+    //     // // Turning is controlled by the X axis of the right stick.
 
-        new RunCommand(
-            () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(Constants.DriveJoyStick.getY(), kDriveYDeadband),
-                -MathUtil.applyDeadband(Constants.DriveJoyStick.getX(), kDriveXDeadband),
-                -MathUtil.applyDeadband(Constants.DriveJoyStick.getZ() * 0.75, kRotDeadband),
-                true),
-            m_robotDrive));
+    //     new RunCommand(
+    //         () -> m_robotDrive.drive(
+    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getY(), kDriveYDeadband),
+    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getX(), kDriveXDeadband),
+    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getZ() * 0.75, kRotDeadband),
+    //             true),
+    //         m_robotDrive));
   }
 
   /**
@@ -89,7 +91,7 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    // JoystickButton button1 = new JoystickButton(Constants.DriveJoyStick, 1);
+    JoystickButton button1 = new JoystickButton(Constants.DriveJoyStick, 1);
     // JoystickButton button2 = new JoystickButton(Constants.DriveJoyStick, 2);
     // JoystickButton button3 = new JoystickButton(Constants.DriveJoyStick, 3);
     // JoystickButton button4 = new JoystickButton(Constants.DriveJoyStick, 4);
@@ -98,8 +100,9 @@ public class RobotContainer {
     // JoystickButton button7 = new JoystickButton(Constants.DriveJoyStick, 7);
     // JoystickButton button8 = new JoystickButton(Constants.DriveJoyStick, 8);
 
-    // button1.whileTrue(new DriveTest(m_robotDrive));
+    button1.whileTrue(new FireBallsAtSetDistance(m_shooter));
 
+    
     // button3.whileTrue(new CoralChangeAngle(coralSubsystem,0.3));
     // button5.whileTrue(new CoralChangeAngle(coralSubsystem,-0.3));
     // button4.whileTrue(new ClimbDownCommand(m_climb));

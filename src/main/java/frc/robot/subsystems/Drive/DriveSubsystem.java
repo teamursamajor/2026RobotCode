@@ -115,12 +115,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    System.out.println(rot);
     xSpeed = xSpeed * .15;
     ySpeed = ySpeed * .15;
     rot = rot * 0.3;
 
-    // System.out.println("Swerve Drive");
     if (Math.abs(xSpeed) < .1) {
       xSpeed = 0.0;
     }
