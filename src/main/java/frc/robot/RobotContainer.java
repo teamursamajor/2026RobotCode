@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.Auto.FireBallsAtSetDistanceAutonomous;
 import frc.robot.commands.Shooter.FireBallsAtSetDistance;
 import frc.robot.commands.Shooter.ShooterTestMotors;
 import frc.robot.subsystems.Drive.DriveSubsystem;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.concurrent.Event;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -46,7 +48,7 @@ public class RobotContainer {
   
 
   // The robot's subsystems and commands are defined here...
-  //public DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public DriveSubsystem m_robotDrive = new DriveSubsystem();
   public ShooterSubsystem m_shooter = new ShooterSubsystem();
   
   // The driver's controller(s)
@@ -138,10 +140,11 @@ public class RobotContainer {
 
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+  public Command getAutonomousCommand() {
+    // An example command will be run in autonomous
+    return new FireBallsAtSetDistanceAutonomous(m_shooter);
+    //return new ExampleCommand(m_exampleSubsystem);
+
+  }
 
 }

@@ -1,17 +1,17 @@
-package frc.robot.commands.Shooter;
+package frc.robot.commands.Auto;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter.ShooterSubsystem;;
+import frc.robot.subsystems.Shooter.ShooterSubsystem;
 
-public class FireBallsAtSetDistance extends Command{
+public class FireBallsAtSetDistanceAutonomous extends Command{
     ShooterSubsystem m_shooter = new ShooterSubsystem();
-    public double desiredShootSpeed = 30;
+    public double desiredShootSpeed = 10;
     public double AmountAboveDesiredShootSpeedToFeed = 2;
 
     public static double ShootSpeedToWheelSpeedRatio = 1;
 
 
-    public FireBallsAtSetDistance(ShooterSubsystem shooterSubsystem) {
+    public FireBallsAtSetDistanceAutonomous(ShooterSubsystem shooterSubsystem) {
     addRequirements(shooterSubsystem);
     
     }
@@ -35,6 +35,4 @@ public class FireBallsAtSetDistance extends Command{
     public void end(boolean interrupted){
         
     }
-
-
 }

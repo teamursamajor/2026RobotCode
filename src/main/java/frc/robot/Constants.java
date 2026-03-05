@@ -59,6 +59,6 @@ public final class Constants {
 
   // Shooter Constants
   public static final int kfeedTalonFXid = 11;
-  public static final int kFrontShootTalonFXid = 9;
-  public static final int kBackShootTalonFXid = 10;
+  public static final int kFrontShootTalonFXid = 10;
+  public static final int kBackShootTalonFXid = 9;
 }

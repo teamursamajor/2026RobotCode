@@ -17,9 +17,9 @@ public class ShooterSubsystem extends SubsystemBase{
         m_feedTalonFX = new TalonFX(Constants.kfeedTalonFXid);
         m_FrontShootTalonFX = new TalonFX(Constants.kBackShootTalonFXid);
         m_BackShootTalonFX = new TalonFX(Constants.kFrontShootTalonFXid);
-        Kraken.SetupKraken(m_feedTalonFX, 1,0,0,0);
-        Kraken.SetupKraken(m_FrontShootTalonFX,1,0,0,0);
-        Kraken.SetupKraken(m_BackShootTalonFX,1,0,0,0);
+        Kraken.SetupKraken(m_feedTalonFX, 1,0,0,1);
+        Kraken.SetupKraken(m_FrontShootTalonFX,1,0,0,1);
+        Kraken.SetupKraken(m_BackShootTalonFX,1,0,0,1);
         
         
     
@@ -32,7 +32,7 @@ public class ShooterSubsystem extends SubsystemBase{
     public void ShooterSetSpeed(double speed){
         VelocityVoltage FrontShooterVelocityVoltage = new VelocityVoltage(30);
         m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
-        VelocityVoltage BackShooterVelocityVoltage = new VelocityVoltage(-30);
+        VelocityVoltage BackShooterVelocityVoltage = new VelocityVoltage(30);
         m_feedTalonFX.setControl(BackShooterVelocityVoltage);
         
         
@@ -47,9 +47,11 @@ public class ShooterSubsystem extends SubsystemBase{
         
     }
     public void SpinAllMotors(){
-        m_FrontShootTalonFX.set(1);
-        m_BackShootTalonFX.set(1);
-        m_feedTalonFX.set(1);
+        VelocityVoltage FrontShooterVelocityVoltage = new VelocityVoltage(30);
+        m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
+        VelocityVoltage BackShooterVelocityVoltage = new VelocityVoltage(30);
+        m_feedTalonFX.setControl(BackShooterVelocityVoltage);
+        
     }
     public void StopAllMotors(){
         m_FrontShootTalonFX.set(0);
