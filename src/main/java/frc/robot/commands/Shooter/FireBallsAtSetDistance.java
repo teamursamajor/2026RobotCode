@@ -5,11 +5,10 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;;
 
 public class FireBallsAtSetDistance extends Command{
     ShooterSubsystem m_shooter = new ShooterSubsystem();
-    public double desiredShootSpeed = 30;
-    public double AmountAboveDesiredShootSpeedToFeed = 2;
+    public double desiredShootSpeed = 100;
+    public double AmountBelowDesiredShootSpeedToFeed = 10;
 
     public static double ShootSpeedToWheelSpeedRatio = 1;
-
 
     public FireBallsAtSetDistance(ShooterSubsystem shooterSubsystem) {
     addRequirements(shooterSubsystem);
@@ -23,8 +22,9 @@ public class FireBallsAtSetDistance extends Command{
     }
     @Override
     public void execute(){
-            if(m_shooter.GetAvrageShooterSpeed() > desiredShootSpeed + AmountAboveDesiredShootSpeedToFeed){
-                m_shooter.ShooterFeed(0.5);
+        System.out.println(m_shooter.GetAvrageShooterSpeed());
+            if(m_shooter.GetAvrageShooterSpeed() > desiredShootSpeed - AmountBelowDesiredShootSpeedToFeed){
+                m_shooter.ShooterFeed(1);
             }
             else{
                 m_shooter.ShooterFeed(0);
@@ -33,7 +33,7 @@ public class FireBallsAtSetDistance extends Command{
 
     @Override
     public void end(boolean interrupted){
-        
+        m_shooter.StopAllMotors();
     }
 
 

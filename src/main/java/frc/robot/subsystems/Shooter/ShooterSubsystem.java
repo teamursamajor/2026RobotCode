@@ -11,7 +11,10 @@ public class ShooterSubsystem extends SubsystemBase{
     public TalonFX m_FrontShootTalonFX;
     public TalonFX m_BackShootTalonFX;
 
-    
+    VelocityVoltage FrontShooterVelocityVoltage;
+    VelocityVoltage BackShooterVelocityVoltage;
+    VelocityVoltage FeedShooterTalonFX;
+
     
     public ShooterSubsystem(){
         m_feedTalonFX = new TalonFX(Constants.kfeedTalonFXid);
@@ -25,15 +28,14 @@ public class ShooterSubsystem extends SubsystemBase{
     
     }
     public void ShooterFeed(double speed){
-        m_feedTalonFX.set(speed);
-        m_feedTalonFX.set(speed);
+        m_feedTalonFX.set(-speed);
         
     }
     public void ShooterSetSpeed(double speed){
-        VelocityVoltage FrontShooterVelocityVoltage = new VelocityVoltage(30);
-        m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
-        VelocityVoltage BackShooterVelocityVoltage = new VelocityVoltage(30);
-        m_feedTalonFX.setControl(BackShooterVelocityVoltage);
+        FrontShooterVelocityVoltage = new VelocityVoltage(-speed);
+        m_FrontShootTalonFX.setControl(FrontShooterVelocityVoltage);
+        BackShooterVelocityVoltage = new VelocityVoltage(speed);
+        m_BackShootTalonFX.setControl(BackShooterVelocityVoltage);
         
         
     }
@@ -47,15 +49,22 @@ public class ShooterSubsystem extends SubsystemBase{
         
     }
     public void SpinAllMotors(){
-        VelocityVoltage FrontShooterVelocityVoltage = new VelocityVoltage(30);
         m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
-        VelocityVoltage BackShooterVelocityVoltage = new VelocityVoltage(30);
         m_feedTalonFX.setControl(BackShooterVelocityVoltage);
         
     }
     public void StopAllMotors(){
-        m_FrontShootTalonFX.set(0);
-        m_BackShootTalonFX.set(0);
-        m_feedTalonFX.set(0);
+        FrontShooterVelocityVoltage = new VelocityVoltage(0);
+        BackShooterVelocityVoltage = new VelocityVoltage(0);
+        FeedShooterTalonFX = new VelocityVoltage(0);
+
+        m_FrontShootTalonFX.setControl(FrontShooterVelocityVoltage);
+        m_BackShootTalonFX.setControl(FrontShooterVelocityVoltage);
+        m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
+
+        m_FrontShootTalonFX.stopMotor();
+        m_BackShootTalonFX.stopMotor();
+        m_feedTalonFX.stopMotor();
+        
     }
 }
