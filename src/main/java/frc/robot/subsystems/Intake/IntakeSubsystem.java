@@ -1,6 +1,7 @@
 package frc.robot.subsystems.Intake;
 
-import com.revrobotics.spark.SparkMax;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import frc.robot.Constants;
 
 public class IntakeSubsystem {
     public IntakeSubsystem(){
@@ -8,6 +9,12 @@ public class IntakeSubsystem {
         
 
     }
- int thing = 4;
- SparkMax redLineToBringIntakeUpDown = new SparkMax(thing, null);
+ Spark redLineToBringIntakeUpDown = new Spark(Constants.kIntakeArm);
+ Spark redLineToConsume = new Spark(Constants.kIntakeConsume);
+ public void IntakeSetSpeed(double speed) {
+    redLineToConsume.set(speed);
+ }
+ public void IntakeDropArm() {
+    redLineToBringIntakeUpDown.set(.1);
+ }
 }
