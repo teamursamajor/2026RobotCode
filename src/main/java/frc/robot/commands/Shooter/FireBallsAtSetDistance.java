@@ -10,7 +10,6 @@ public class FireBallsAtSetDistance extends Command{
 
     public static double ShootSpeedToWheelSpeedRatio = 1;
 
-
     public FireBallsAtSetDistance(ShooterSubsystem shooterSubsystem) {
     addRequirements(shooterSubsystem);
     

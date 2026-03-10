@@ -1,9 +1,10 @@
 package frc.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IntakeSubsystem {
+public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem(){
          
         
@@ -17,4 +18,8 @@ public class IntakeSubsystem {
  public void IntakeDropArm() {
     redLineToBringIntakeUpDown.set(.1);
  }
+ public void IntakeStopArm() {
+    redLineToBringIntakeUpDown.set(0);
+ }
+ 
 }
