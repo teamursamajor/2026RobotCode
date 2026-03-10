@@ -5,10 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.Intake.IntakeDrop;
 import frc.robot.commands.Auto.MoveToCenterOfField;
 import frc.robot.commands.Shooter.FireBallsAtSetDistance;
 import frc.robot.commands.Shooter.ShooterTestMotors;
 import frc.robot.subsystems.Drive.DriveSubsystem;
+import frc.robot.subsystems.Intake.IntakeSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
@@ -50,7 +52,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public DriveSubsystem m_robotDrive = new DriveSubsystem();
   public ShooterSubsystem m_shooter = new ShooterSubsystem();
-  
+  public IntakeSubsystem m_Intake = new IntakeSubsystem();
   // The driver's controller(s)
   //XboxController m_driverController = new XboxController(0);
 
@@ -94,7 +96,7 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     JoystickButton button1 = new JoystickButton(Constants.DriveJoyStick, 1);
-    // JoystickButton button2 = new JoystickButton(Constants.DriveJoyStick, 2);
+    JoystickButton button2 = new JoystickButton(Constants.DriveJoyStick, 2);
     // JoystickButton button3 = new JoystickButton(Constants.DriveJoyStick, 3);
     // JoystickButton button4 = new JoystickButton(Constants.DriveJoyStick, 4);
     // JoystickButton button5 = new JoystickButton(Constants.DriveJoyStick, 5);
@@ -104,7 +106,7 @@ public class RobotContainer {
 
     button1.whileTrue(new FireBallsAtSetDistance(m_shooter));
 
-    
+    button2.whileTrue(new IntakeDrop(m_Intake));
     // button3.whileTrue(new CoralChangeAngle(coralSubsystem,0.3));
     // button5.whileTrue(new CoralChangeAngle(coralSubsystem,-0.3));
     // button4.whileTrue(new ClimbDownCommand(m_climb));
