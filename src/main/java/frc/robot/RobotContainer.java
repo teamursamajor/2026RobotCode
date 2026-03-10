@@ -5,7 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants;
-import frc.robot.commands.Auto.FireBallsAtSetDistanceAutonomous;
+import frc.robot.commands.Auto.MoveToCenterOfField;
 import frc.robot.commands.Shooter.FireBallsAtSetDistance;
 import frc.robot.commands.Shooter.ShooterTestMotors;
 import frc.robot.subsystems.Drive.DriveSubsystem;
@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * the {@link Robot}
  * periodic methods (other than the scheduler calls). Instead, the structure of
  * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
+ * subsystems, commands, and trigger mappgs) should be declared here.
  */
 public class RobotContainer {
   public static final double kTrackWidth = Units.inchesToMeters(27.5);
@@ -142,7 +142,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new FireBallsAtSetDistanceAutonomous(m_shooter);
+    return new FireBallsAtSetDistance(m_shooter).withTimeout(5)
+    .andThen(new MoveToCenterOfField(m_robotDrive,"Left").withTimeout(7));
     //return new ExampleCommand(m_exampleSubsystem);
 
   }

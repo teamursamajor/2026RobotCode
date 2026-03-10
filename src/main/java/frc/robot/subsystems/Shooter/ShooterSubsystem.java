@@ -2,6 +2,7 @@ package frc.robot.subsystems.Shooter;
 
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,9 +21,9 @@ public class ShooterSubsystem extends SubsystemBase{
         m_feedTalonFX = new TalonFX(Constants.kfeedTalonFXid);
         m_FrontShootTalonFX = new TalonFX(Constants.kBackShootTalonFXid);
         m_BackShootTalonFX = new TalonFX(Constants.kFrontShootTalonFXid);
-        Kraken.SetupKraken(m_feedTalonFX, 1,0,0,1);
-        Kraken.SetupKraken(m_FrontShootTalonFX,1,0,0,1);
-        Kraken.SetupKraken(m_BackShootTalonFX,1,0,0,1);
+        Kraken.SetupKraken(m_feedTalonFX, 1,0,0,1, NeutralModeValue.Coast);
+        Kraken.SetupKraken(m_FrontShootTalonFX,1,0,0,1,NeutralModeValue.Coast);
+        Kraken.SetupKraken(m_BackShootTalonFX,1,0,0,1,NeutralModeValue.Coast);
         
         
     

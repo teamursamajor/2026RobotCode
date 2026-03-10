@@ -5,8 +5,8 @@ import frc.robot.subsystems.Shooter.ShooterSubsystem;;
 
 public class FireBallsAtSetDistance extends Command{
     ShooterSubsystem m_shooter = new ShooterSubsystem();
-    public double desiredShootSpeed = 100;
-    public double AmountBelowDesiredShootSpeedToFeed = 10;
+    public double desiredShootSpeed = 40;
+    public double AmountBelowDesiredShootSpeedToFeed = 1;
 
     public static double ShootSpeedToWheelSpeedRatio = 1;
 
