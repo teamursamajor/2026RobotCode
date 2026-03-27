@@ -7,7 +7,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ShooterSubsystem extends SubsystemBase{
+public class ShooterSubsystem extends SubsystemBase {
     public TalonFX m_feedTalonFX;
     public TalonFX m_FrontShootTalonFX;
     public TalonFX m_BackShootTalonFX;
@@ -16,45 +16,45 @@ public class ShooterSubsystem extends SubsystemBase{
     VelocityVoltage BackShooterVelocityVoltage;
     VelocityVoltage FeedShooterTalonFX;
 
-    
-    public ShooterSubsystem(){
+    public ShooterSubsystem() {
         m_feedTalonFX = new TalonFX(Constants.kfeedTalonFXid);
         m_FrontShootTalonFX = new TalonFX(Constants.kBackShootTalonFXid);
         m_BackShootTalonFX = new TalonFX(Constants.kFrontShootTalonFXid);
-        Kraken.SetupKraken(m_feedTalonFX, 1,0,0,1, NeutralModeValue.Coast);
-        Kraken.SetupKraken(m_FrontShootTalonFX,1,0,0,1,NeutralModeValue.Coast);
-        Kraken.SetupKraken(m_BackShootTalonFX,1,0,0,1,NeutralModeValue.Coast);
-        
-        
-    
+        Kraken.SetupKraken(m_feedTalonFX, 1, 0, 0, 1, NeutralModeValue.Coast);
+        Kraken.SetupKraken(m_FrontShootTalonFX, 1, 0, 0, 1, NeutralModeValue.Coast);
+        Kraken.SetupKraken(m_BackShootTalonFX, 1, 0, 0, 1, NeutralModeValue.Coast);
     }
-    public void ShooterFeed(double speed){
+
+    public void ShooterFeed(double speed) {
         m_feedTalonFX.set(-speed);
-        
+
     }
-    public void ShooterSetSpeed(double speed){
+
+    public void ShooterSetSpeed(double speed) {
         FrontShooterVelocityVoltage = new VelocityVoltage(-speed);
         m_FrontShootTalonFX.setControl(FrontShooterVelocityVoltage);
         BackShooterVelocityVoltage = new VelocityVoltage(speed);
         m_BackShootTalonFX.setControl(BackShooterVelocityVoltage);
-        
-        
+
     }
-    public double GetAvrageShooterSpeed(){
+
+    public double GetAvrageShooterSpeed() {
         double FrontShootTalonVel = Math.abs(m_FrontShootTalonFX.getVelocity().getValueAsDouble());
         double BackShootTalonVel = Math.abs(m_BackShootTalonFX.getVelocity().getValueAsDouble());
-        return (FrontShootTalonVel+BackShootTalonVel)/2;
-        }
-
-    public void VelocityTest(){
-        
+        return (FrontShootTalonVel + BackShootTalonVel) / 2;
     }
-    public void SpinAllMotors(){
+
+    public void VelocityTest() {
+
+    }
+
+    public void SpinAllMotors() {
         m_feedTalonFX.setControl(FrontShooterVelocityVoltage);
         m_feedTalonFX.setControl(BackShooterVelocityVoltage);
-        
+
     }
-    public void StopAllMotors(){
+
+    public void StopAllMotors() {
         FrontShooterVelocityVoltage = new VelocityVoltage(0);
         BackShooterVelocityVoltage = new VelocityVoltage(0);
         FeedShooterTalonFX = new VelocityVoltage(0);
@@ -66,6 +66,6 @@ public class ShooterSubsystem extends SubsystemBase{
         m_FrontShootTalonFX.stopMotor();
         m_BackShootTalonFX.stopMotor();
         m_feedTalonFX.stopMotor();
-        
+
     }
 }

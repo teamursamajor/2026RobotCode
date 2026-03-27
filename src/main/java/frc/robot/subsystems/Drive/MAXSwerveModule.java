@@ -112,7 +112,7 @@ public class MAXSwerveModule {
   @SuppressWarnings("removal")
   public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
     this.m_drivingCANId = drivingCANId;
-    
+
     m_drivingTalonFX = new TalonFX(drivingCANId);
     m_turningSparkMax = new SparkMax(turningCANId, MotorType.kBrushless);
 
@@ -130,7 +130,6 @@ public class MAXSwerveModule {
 
     m_turningPIDController.setReference(1.0, ControlType.kDutyCycle);
 
-    double turningFactor = 2 * Math.PI;
 
     // Apply position and velocity conversion factors for the driving encoder. The
     // native units for position and velocity are rotations and RPM, respectively,
@@ -272,6 +271,7 @@ public class MAXSwerveModule {
    * @param desiredState Desired state with speed and angle.
    */
 
+  @SuppressWarnings("removal")
   public void setDesiredState(SwerveModuleState desiredState) {
     // Apply chassis angular offset to the desired state.
     SwerveModuleState correctedDesiredState = new SwerveModuleState();
@@ -279,6 +279,7 @@ public class MAXSwerveModule {
     correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
     // Optimize the reference state to avoid spinning further than 90 degrees.
+    @SuppressWarnings("deprecation")
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
         new Rotation2d(m_turningEncoder.getPosition()));
 
@@ -302,6 +303,7 @@ public class MAXSwerveModule {
     m_desiredState = desiredState;
   }
 
+  @SuppressWarnings("removal")
   public void setLeftDesiredState(SwerveModuleState desiredState) {
     // Apply chassis angular offset to the desired state.
     SwerveModuleState correctedDesiredState = new SwerveModuleState();
@@ -309,6 +311,7 @@ public class MAXSwerveModule {
     correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
     // Optimize the reference state to avoid spinning further than 90 degrees.
+    @SuppressWarnings("deprecation")
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
         new Rotation2d(m_turningEncoder.getPosition()));
 

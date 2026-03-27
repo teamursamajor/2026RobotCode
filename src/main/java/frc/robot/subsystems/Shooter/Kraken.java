@@ -4,11 +4,10 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-
 public class Kraken {
 
-
-    public static void SetupKraken(TalonFX kraken, double P, double I, double D, double FF, NeutralModeValue NeutralModeValue){
+    public static void SetupKraken(TalonFX kraken, double P, double I, double D, double FF,
+            NeutralModeValue NeutralModeValue) {
         var slot0Configs = new Slot0Configs();
         slot0Configs.kP = P;
         slot0Configs.kI = I;
@@ -16,7 +15,7 @@ public class Kraken {
         slot0Configs.kV = FF;
 
         kraken.getConfigurator().apply(slot0Configs);
-        
+
         kraken.setNeutralMode(NeutralModeValue);
     }
 

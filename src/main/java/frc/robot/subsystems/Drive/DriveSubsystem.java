@@ -1,6 +1,5 @@
 package frc.robot.subsystems.Drive;
 
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import com.studica.frc.AHRS;
+import com.studica.frc.jni.AHRSJNI;
 
 public class DriveSubsystem extends SubsystemBase {
   AHRS ahrs = new AHRS(AHRS.NavXComType.kMXP_SPI);
@@ -54,6 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
           m_frontRight.getPosition(),
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
+
       });
 
   /** Creates a new DriveSubsystem. */
@@ -115,9 +116,12 @@ public class DriveSubsystem extends SubsystemBase {
    */
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    xSpeed = xSpeed * .15;
-    ySpeed = ySpeed * .15;
-    rot = rot * 0.3;
+    xSpeed = xSpeed * 1;
+    ySpeed = ySpeed * 1;
+    rot = rot * 0.9;
+    
+    
+  
 
     if (Math.abs(xSpeed) < .1) {
       xSpeed = 0.0;
@@ -128,7 +132,6 @@ public class DriveSubsystem extends SubsystemBase {
     if (Math.abs(rot) < .1) {
       rot = 0.0;
     }
-
 
     // Convert the commanded speeds into the correct units for the drivetrain
     double xSpeedDelivered = xSpeed * Constants.kMaxSpeedMetersPerSecond;
@@ -150,6 +153,7 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("gyroAngle", ahrs.getAngle());
     SmartDashboard.putNumber("gyro pitch", ahrs.getPitch());
     SmartDashboard.putNumber("gyro Yaw", ahrs.getYaw());
+    
   }
 
   /**

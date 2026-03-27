@@ -61,8 +61,8 @@ public final class Constants {
   public static final int kfeedTalonFXid = 11;
   public static final int kFrontShootTalonFXid = 9;
   public static final int kBackShootTalonFXid = 10;
-  
-  //intake contants
-  public static final int kIntakeArm = 0;
-  public static final int kIntakeConsume = 1;
+
+  // intake contants
+  public static final int kIntakeArm = 1;
+  public static final int kIntakeConsume = 2;
 }

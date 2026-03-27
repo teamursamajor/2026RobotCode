@@ -6,12 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.commands.Intake.IntakeDrop;
-import frc.robot.commands.Auto.MoveToCenterOfField;
+import frc.robot.commands.Intake.IntakeFeed;
+import frc.robot.commands.Auto.MoveDirections;
 import frc.robot.commands.Shooter.FireBallsAtSetDistance;
 import frc.robot.commands.Shooter.ShooterTestMotors;
 import frc.robot.subsystems.Drive.DriveSubsystem;
 import frc.robot.subsystems.Intake.IntakeSubsystem;
 import frc.robot.subsystems.Shooter.ShooterSubsystem;
+
+import com.studica.frc.jni.AHRSJNI;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.concurrent.Event;
@@ -32,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * the robot (including
  * subsystems, commands, and trigger mappgs) should be declared here.
  */
+@SuppressWarnings("unused")
 public class RobotContainer {
   public static final double kTrackWidth = Units.inchesToMeters(27.5);
   // Distance between centers of right and left wheels on robot
@@ -47,14 +52,13 @@ public class RobotContainer {
   public final double kDriveYDeadband = 0.03;
   public final double kDriveXDeadband = 0.1;
   public final double kRotDeadband = 0.4;
-  
 
   // The robot's subsystems and commands are defined here...
   public DriveSubsystem m_robotDrive = new DriveSubsystem();
   public ShooterSubsystem m_shooter = new ShooterSubsystem();
   public IntakeSubsystem m_Intake = new IntakeSubsystem();
   // The driver's controller(s)
-  //XboxController m_driverController = new XboxController(0);
+  // XboxController m_driverController = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -63,19 +67,20 @@ public class RobotContainer {
     // Configure the trigger bindings
     configureBindings();
 
-
     // Configure default commands
-    // m_robotDrive.setDefaultCommand(
-    //     // // The left stick controls translation of the robot.
-    //     // // Turning is controlled by the X axis of the right stick.
+    m_robotDrive.setDefaultCommand(
+        // // // The left stick controls translation of the robot.
+        // // // Turning is controlled by the X axis of the right stick.
 
-    //     new RunCommand(
-    //         () -> m_robotDrive.drive(
-    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getY(), kDriveYDeadband),
-    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getX(), kDriveXDeadband),
-    //             -MathUtil.applyDeadband(Constants.DriveJoyStick.getZ() * 0.75, kRotDeadband),
-    //             true),
-    //         m_robotDrive));
+        new RunCommand(
+              
+
+            () -> m_robotDrive.drive(
+                -MathUtil.applyDeadband(Constants.DriveJoyStick.getY(), kDriveYDeadband),
+                -MathUtil.applyDeadband(Constants.DriveJoyStick.getX(), kDriveXDeadband),
+                -MathUtil.applyDeadband(Constants.DriveJoyStick.getZ(), kRotDeadband),
+                true),
+            m_robotDrive));
   }
 
   /**
@@ -97,56 +102,23 @@ public class RobotContainer {
 
     JoystickButton button1 = new JoystickButton(Constants.DriveJoyStick, 1);
     JoystickButton button2 = new JoystickButton(Constants.DriveJoyStick, 2);
-    // JoystickButton button3 = new JoystickButton(Constants.DriveJoyStick, 3);
-    // JoystickButton button4 = new JoystickButton(Constants.DriveJoyStick, 4);
-    // JoystickButton button5 = new JoystickButton(Constants.DriveJoyStick, 5);
-    // JoystickButton button6 = new JoystickButton(Constants.DriveJoyStick, 6);
-    // JoystickButton button7 = new JoystickButton(Constants.DriveJoyStick, 7);
-    // JoystickButton button8 = new JoystickButton(Constants.DriveJoyStick, 8);
+    JoystickButton button3 = new JoystickButton(Constants.DriveJoyStick, 3);
+    JoystickButton button4 = new JoystickButton(Constants.DriveJoyStick, 4);
+    JoystickButton button5 = new JoystickButton(Constants.DriveJoyStick, 5);
+    JoystickButton button6 = new JoystickButton(Constants.DriveJoyStick, 6);
+    JoystickButton button7 = new JoystickButton(Constants.DriveJoyStick, 7);
+    JoystickButton button8 = new JoystickButton(Constants.DriveJoyStick, 8);
 
     button1.whileTrue(new FireBallsAtSetDistance(m_shooter));
 
-    button2.whileTrue(new IntakeDrop(m_Intake));
-    // button3.whileTrue(new CoralChangeAngle(coralSubsystem,0.3));
-    // button5.whileTrue(new CoralChangeAngle(coralSubsystem,-0.3));
-    // button4.whileTrue(new ClimbDownCommand(m_climb));
-    // button5.whileTrue(new AlgeaIncreaseAngle(m_Algae));
-    // button4.whileTrue(new PullCoral(coralSubsystem));
-    // button6.whileTrue(new PushCoral(coralSubsystem));
-
-    // button7.whileTrue(new ElevatorUp(elevatorSubsystem));
-    // button8.whileTrue(new ElevatorDown(elevatorSubsystem));
-    // Black Controller
-    // Constants.xboxController.leftTrigger().whileTrue(new
-    // PullCoral(coralSubsystem));
-    // Constants.xboxController.rightTrigger().whileTrue(new
-    // PushCoral(coralSubsystem));
-    // Constants.xboxController.leftBumper().whileTrue(new
-    // IntakeAngle(coralSubsystem));
-    // Constants.xboxController.rightBumper().whileTrue(new
-    // OutakeAngle(coralSubsystem));
-    // Constants.xboxController.povLeft().whileTrue(new
-    // ElevatorSetHeight(elevatorSubsystem, 1));
-    // Constants.xboxController.povUp().whileTrue(new
-    // ElevatorSetHeight(elevatorSubsystem, 4));
-    // Constants.xboxController.povRight().whileTrue(new
-    // ElevatorSetHeight(elevatorSubsystem, 3));
-    // Constants.xboxController.povDown().whileTrue(new
-    // ElevatorSetHeight(elevatorSubsystem, 2));
-    // Constants.xboxController.b().whileTrue(new autoIntakeAngle(coralSubsystem,
-    // 0.3, 90));
-    // Constants.xboxController.x().whileTrue(new autoIntakeAngle(coralSubsystem,
-    // 0.3, 135));
-    // Constants.xboxController.y().whileTrue(new ElevatorUp(elevatorSubsystem));
-    // onstants.xboxController.a().whileTrue(new ElevatorDown(elevatorSubsystem));
-
+    //button2.whileTrue(new IntakeFeed(m_Intake));
+    button5.whileTrue(new IntakeDrop(m_Intake));
+    
   }
 
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return new FireBallsAtSetDistance(m_shooter).withTimeout(5)
-    .andThen(new MoveToCenterOfField(m_robotDrive,"Left").withTimeout(7));
-    //return new ExampleCommand(m_exampleSubsystem);
+    return new MoveDirections(m_robotDrive, -1,0,0).withTimeout(0.4).andThen(new FireBallsAtSetDistance(m_shooter).withTimeout(2));
 
   }
 
